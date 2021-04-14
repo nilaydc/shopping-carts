@@ -1,27 +1,30 @@
 pipeline{
+
     agent any
+
 // uncomment the following lines by removing /* and */ to enable
     tools{
-       nodejs 'nodejs' 
+       maven 'maven' 
     }
-    
+   
+
     stages{
         stage('build'){
             steps{
                 echo 'this is the build job'
-                sh 'npm install'
+                sh 'mvn compile'
             }
         }
         stage('test'){
             steps{
                 echo 'this is the test job'
-                sh 'npm test'
+                sh 'mvn clean test'
             }
         }
         stage('package'){
             steps{
                 echo 'this is the package job'
-                sh 'npm run package'
+                sh 'mvn package -DskipTests'
             }
         }
     }
@@ -29,9 +32,9 @@ pipeline{
     post{
         always{
             echo 'this pipeline has completed...'
-        }
-        
+        }        
     }
-    
-}
 
+  }
+
+}
